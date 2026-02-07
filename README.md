@@ -1,5 +1,27 @@
-# Vue 3 + TypeScript + Vite
+# 将棋盤コンポーネント サンプル
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Vue 3 + TypeScript で実装した汎用将棋盤コンポーネントのサンプルアプリケーション。
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## 機能
+
+- **入力モード** (`/play`): クリック操作で駒を動かして棋譜を作成
+- **再生モード** (`/replay`): KIF形式の棋譜を読み込んで前後に送る
+- **継盤モード**: 再生中の局面から一時的に駒を動かす
+
+## 技術スタック
+
+- Vue 3 (Composition API)
+- TypeScript
+- Vite
+- Vue Router 4
+
+## セットアップ
+
+```bash
+npm install
+npm run dev
+```
+
+## ドキュメント
+
+詳細な設計書は [`docs/design.md`](docs/design.md) を参照してください。
