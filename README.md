@@ -2,6 +2,10 @@
 
 Vue 3 + TypeScript で実装した汎用将棋盤コンポーネントのサンプルアプリケーション。
 
+| 入力モード | 再生モード |
+|:---:|:---:|
+| ![入力モード](images/screenshot_play.png) | ![再生モード](images/screenshot_replay.png) |
+
 ## 機能
 
 - **入力モード** (`/play`): クリック操作で駒を動かして棋譜を作成
