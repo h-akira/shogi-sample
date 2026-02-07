@@ -2,9 +2,13 @@
 
 Vue 3 + TypeScript で実装した汎用将棋盤コンポーネントのサンプルアプリケーション。
 
-| 入力モード | 再生モード |
-|:---:|:---:|
-| ![入力モード](images/screenshot_play.png) | ![再生モード](images/screenshot_replay.png) |
+### 入力モード
+
+![入力モード](images/screenshot_play.png)
+
+### 再生モード
+
+![再生モード](images/screenshot_replay.png)
 
 ## 機能
 
