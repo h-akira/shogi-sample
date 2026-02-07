@@ -3,13 +3,12 @@ import type { GameState, Move } from '../core/types'
 import { createInitialState, applyMove, undoMove } from '../core/game'
 import { toSfen, parseSfen } from '../core/sfen'
 import { toKif, parseKif, type KifMetadata } from '../core/kif'
-import { isCheckmate, isInCheck } from '../core/rules'
+import { isCheckmate } from '../core/rules'
 
 export function useGameState() {
   const state = ref<GameState>(createInitialState())
 
   const sfen = computed(() => toSfen(state.value))
-  const inCheck = computed(() => isInCheck(state.value.board, state.value.turn))
   const checkmated = computed(() => isCheckmate(state.value))
 
   function doMove(move: Move) {
@@ -41,7 +40,6 @@ export function useGameState() {
   return {
     state,
     sfen,
-    inCheck,
     checkmated,
     doMove,
     doUndo,

@@ -7,7 +7,6 @@ defineProps<{
   isSelected: boolean
   isLegalTarget: boolean
   isLastMove: boolean
-  isCheck: boolean
 }>()
 
 defineEmits<{
@@ -22,7 +21,6 @@ defineEmits<{
       selected: isSelected,
       'legal-target': isLegalTarget,
       'last-move': isLastMove,
-      check: isCheck,
     }"
     @click="$emit('click')"
   >
@@ -61,11 +59,7 @@ defineEmits<{
 }
 
 .square.last-move {
-  background: rgba(255, 200, 50, 0.3);
-}
-
-.square.check {
-  background: rgba(255, 50, 50, 0.3);
+  background: rgba(255, 120, 0, 0.35);
 }
 
 .move-dot {

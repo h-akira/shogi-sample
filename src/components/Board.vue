@@ -7,7 +7,6 @@ const props = defineProps<{
   selectedPos: Position | null
   legalTargets: Position[]
   lastMove: { from: Position; to: Position } | null
-  checkPos: Position | null
 }>()
 
 defineEmits<{
@@ -26,10 +25,6 @@ function isLastMove(row: number, col: number): boolean {
   if (!props.lastMove) return false
   const { from, to } = props.lastMove
   return (from.row === row && from.col === col) || (to.row === row && to.col === col)
-}
-
-function isCheck(row: number, col: number): boolean {
-  return !!props.checkPos && props.checkPos.row === row && props.checkPos.col === col
 }
 
 const rows = Array(9).fill(null)
@@ -59,7 +54,6 @@ const rankLabels = ['一', '二', '三', '四', '五', '六', '七', '八', '九
             :is-selected="isSelected(rowIdx, colIdx)"
             :is-legal-target="isLegalTarget(rowIdx, colIdx)"
             :is-last-move="isLastMove(rowIdx, colIdx)"
-            :is-check="isCheck(rowIdx, colIdx)"
             :class="{
               'top-edge': rowIdx === 0,
               'bottom-edge': rowIdx === 8,
@@ -69,12 +63,6 @@ const rankLabels = ['一', '二', '三', '四', '五', '六', '七', '八', '九
             @click="$emit('squareClick', { row: rowIdx, col: colIdx })"
           />
         </template>
-
-        <!-- Star points -->
-        <div class="star" style="grid-row: 4; grid-column: 4;" />
-        <div class="star" style="grid-row: 4; grid-column: 7;" />
-        <div class="star" style="grid-row: 7; grid-column: 4;" />
-        <div class="star" style="grid-row: 7; grid-column: 7;" />
       </div>
 
       <!-- Rank labels (right side) -->
@@ -141,18 +129,4 @@ const rankLabels = ['一', '二', '三', '四', '五', '六', '七', '八', '九
 .left-edge { border-left-width: 2px; }
 .right-edge { border-right-width: 2px; }
 
-/* Star points (hoshi) */
-.star {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: #8b4513;
-  border-radius: 50%;
-  pointer-events: none;
-  /* Position at intersection using percentage */
-}
-.star:nth-child(82) { top: calc(100% / 9 * 3 - 3px); left: calc(100% / 9 * 3 - 3px); }
-.star:nth-child(83) { top: calc(100% / 9 * 3 - 3px); left: calc(100% / 9 * 6 - 3px); }
-.star:nth-child(84) { top: calc(100% / 9 * 6 - 3px); left: calc(100% / 9 * 3 - 3px); }
-.star:nth-child(85) { top: calc(100% / 9 * 6 - 3px); left: calc(100% / 9 * 6 - 3px); }
 </style>

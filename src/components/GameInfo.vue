@@ -11,7 +11,6 @@ const MODE_LABELS: Record<AppMode, string> = {
 defineProps<{
   turn: Player
   moveCount: number
-  inCheck: boolean
   checkmated: boolean
   mode: AppMode
 }>()
@@ -34,9 +33,6 @@ defineProps<{
     </div>
     <div v-if="checkmated" class="status checkmate">
       詰み — {{ turn === 'sente' ? '後手' : '先手' }}の勝ち
-    </div>
-    <div v-else-if="inCheck" class="status check">
-      王手
     </div>
   </div>
 </template>
@@ -95,11 +91,6 @@ defineProps<{
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 0.9rem;
-}
-
-.status.check {
-  background: #fff3cd;
-  color: #856404;
 }
 
 .status.checkmate {

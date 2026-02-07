@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import type { GameState, Move } from '../core/types'
 import { toSfen } from '../core/sfen'
-import { isInCheck, isCheckmate } from '../core/rules'
+import { isCheckmate } from '../core/rules'
 import { useGameState } from './useGameState'
 import { usePlayback } from './usePlayback'
 import { useSelection } from './useSelection'
@@ -39,8 +39,7 @@ export function useMode(initialMode: AppMode = 'input') {
   // SFEN is always available
   const sfen = computed(() => toSfen(activeState.value))
 
-  // Check/checkmate based on active state
-  const inCheck = computed(() => isInCheck(activeState.value.board, activeState.value.turn))
+  // Checkmate based on active state
   const checkmated = computed(() => isCheckmate(activeState.value))
 
   // Move handler dispatches to the correct game state
@@ -130,7 +129,6 @@ export function useMode(initialMode: AppMode = 'input') {
     activeState,
     isInteractive,
     sfen,
-    inCheck,
     checkmated,
 
     // Selection

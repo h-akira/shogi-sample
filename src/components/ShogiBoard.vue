@@ -2,7 +2,6 @@
 import { computed } from 'vue'
 import type { Position, PieceType } from '../core/types'
 import type { AppMode } from '../composables/useMode'
-import { findKing } from '../core/moves'
 import { useMode } from '../composables/useMode'
 import Board from './Board.vue'
 import Hand from './Hand.vue'
@@ -22,7 +21,6 @@ const {
   activeState,
   isInteractive,
   sfen,
-  inCheck,
   checkmated,
   selection,
   legalTargets,
@@ -69,12 +67,6 @@ const lastMove = computed(() => {
   return { from: last.to, to: last.to }
 })
 
-// Check position (king square)
-const checkPos = computed<Position | null>(() => {
-  if (!inCheck.value) return null
-  return findKing(activeState.value.board, activeState.value.turn)
-})
-
 // Expose for parent
 defineExpose({
   getSfen: () => sfen.value,
@@ -109,7 +101,6 @@ defineExpose({
       :selected-pos="selectedPos"
       :legal-targets="isInteractive ? legalTargets : []"
       :last-move="lastMove"
-      :check-pos="checkPos"
       @square-click="(pos: Position) => isInteractive && handleSquareClick(pos)"
     />
 
@@ -132,6 +123,7 @@ defineExpose({
       @go-back="playback.goBack()"
       @go-forward="playback.goForward()"
       @go-to-end="playback.goToEnd()"
+      @go-to-move="(n: number) => playback.goToMove(n)"
       @enter-continuation="enterContinuation()"
       @exit-continuation="exitContinuation()"
       @undo="doUndo()"
@@ -141,7 +133,6 @@ defineExpose({
     <GameInfo
       :turn="activeState.turn"
       :move-count="activeState.moveCount"
-      :in-check="inCheck"
       :checkmated="checkmated"
       :mode="mode"
     />

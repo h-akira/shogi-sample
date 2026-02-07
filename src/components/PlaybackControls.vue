@@ -7,15 +7,21 @@ defineProps<{
   mode: AppMode
 }>()
 
-defineEmits<{
+const emit = defineEmits<{
   goToStart: []
   goBack: []
   goForward: []
   goToEnd: []
+  goToMove: [index: number]
   enterContinuation: []
   exitContinuation: []
   undo: []
 }>()
+
+function onSliderInput(event: Event) {
+  const value = Number((event.target as HTMLInputElement).value)
+  emit('goToMove', value)
+}
 </script>
 
 <template>
@@ -28,8 +34,16 @@ defineEmits<{
         <button :disabled="currentMoveIndex >= totalMoves" @click="$emit('goForward')" title="一手進む">&#9655;</button>
         <button :disabled="currentMoveIndex >= totalMoves" @click="$emit('goToEnd')" title="最終">&#9655;|</button>
       </div>
-      <div class="move-info">
-        {{ currentMoveIndex }} / {{ totalMoves }}手
+      <div class="slider-row">
+        <input
+          type="range"
+          class="move-slider"
+          :min="0"
+          :max="totalMoves"
+          :value="currentMoveIndex"
+          @input="onSliderInput"
+        />
+        <span class="move-info">{{ currentMoveIndex }} / {{ totalMoves }}手</span>
       </div>
       <button class="continuation-btn" @click="$emit('enterContinuation')">継盤</button>
     </template>
@@ -81,9 +95,24 @@ defineEmits<{
   cursor: not-allowed;
 }
 
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.move-slider {
+  flex: 1;
+  min-width: 120px;
+  cursor: pointer;
+  accent-color: #8b4513;
+}
+
 .move-info {
   font-size: 0.85rem;
   color: #666;
+  white-space: nowrap;
 }
 
 .continuation-btn {

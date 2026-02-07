@@ -3,7 +3,7 @@ import type { GameState } from '../core/types'
 import { createInitialState, replayToMove } from '../core/game'
 import { toSfen } from '../core/sfen'
 import { toKif, parseKif, type KifMetadata } from '../core/kif'
-import { isInCheck, isCheckmate } from '../core/rules'
+import { isCheckmate } from '../core/rules'
 
 export function usePlayback() {
   // Full game state with all moves applied (source of truth for history)
@@ -28,7 +28,6 @@ export function usePlayback() {
   })
 
   const sfen = computed(() => toSfen(displayState.value))
-  const inCheck = computed(() => isInCheck(displayState.value.board, displayState.value.turn))
   const checkmated = computed(() => isCheckmate(displayState.value))
 
   function loadKif(kifStr: string) {
@@ -68,7 +67,6 @@ export function usePlayback() {
     currentMoveIndex,
     totalMoves,
     sfen,
-    inCheck,
     checkmated,
     metadata,
     loadKif,
